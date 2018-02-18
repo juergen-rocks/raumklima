@@ -163,6 +163,8 @@ Dann noch ein bisschen Shorewall konfigurieren, so dass nur mein Monitoring-Host
 
 Nun wird alle halbe Minute die RS 500 abgefragt und das Ergebnis in Redis abgelegt.
 
+Dazu kann man jetzt noch ein kleines Web-Interface nutzen: [https://github.com/juergen-rocks/raumklima-web](https://github.com/juergen-rocks/raumklima-web)
+
 ### Monitoring-Host
 
 Auf dem Monitoring-Host erzeuge ich auch ein virtualenv, und führe im aktivierten Environment dieses aus:
