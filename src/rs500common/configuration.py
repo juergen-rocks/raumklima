@@ -4,7 +4,6 @@ import configparser
 class ConfigProvider(object):
 
     def __init__(self, file: str):
-        print(file)
         self.__config = configparser.ConfigParser()
         self.__config.optionxform = str
         self.__config.read(file)
