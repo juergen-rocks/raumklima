@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from os.path import dirname
 
 from rs5002redis.saver import save_data_to_redis
@@ -9,7 +11,7 @@ def fetch_and_save():
     data = reader.get_data()
     if data is not None:
         to_save = {}
-        for channel, values in data.items():
+        for channel, values in data.all.items():
             if values is not None:
                 to_save['c{}_temp'.format(channel)] = values.temperature
                 to_save['c{}_humi'.format(channel)] = values.humidity

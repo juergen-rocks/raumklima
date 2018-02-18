@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from rs500reader.reader import Rs500Reader
 
 

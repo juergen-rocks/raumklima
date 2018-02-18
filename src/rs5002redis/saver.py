@@ -2,7 +2,7 @@ from sys import stderr
 
 from redis import StrictRedis, RedisError
 
-from ..rs500common.configuration import ConfigProvider
+from rs500common.configuration import ConfigProvider
 
 
 def save_data_to_redis(data: dict, config_file: str) -> None:
