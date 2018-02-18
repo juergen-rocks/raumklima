@@ -1,0 +1,2 @@
+hidapi==0.7.99.post21
+redis==2.10.6
