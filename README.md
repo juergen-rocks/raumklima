@@ -4,6 +4,7 @@ Der Elektronikversender [ELV](https://www.elv.de/) bietet unter der Artikelnumme
 
 __ACHTUNG! Das hier beschriebene Vorgehen kann das Gerät irreparabel schädigen! Hier werden Annahmen getroffen, die sich aufgrund fehlender Dokumentation nicht bestätigen ließen! Es wird keinerlei Support geleistet! Es wird keinerlei Garantie oder Gewährleistung für die korrekte Funktionsweise oder Ungefährlichkeit übernommen.__
 
+__Noch ein Hinweis: Ich habe nichts mit ELV zu tun. Ich habe die Raumklimastation nur dort gekauft.__
 
 ## Motivation
 
@@ -55,7 +56,7 @@ Die Station verfügt über 8 Kanäle, ich habe nur 5 Sensoren angeschlossen.
 Header?             |  Temp     RH |              |  Temp     RH |              |  Temp     RH |              |  Temp     RH |
 +----+              +---------+----+              +---------+----+              +---------+----+              +---------+----+
 |    |              |         |    |              |         |    |              |         |    |              |         |    |
- 0x7b 0x00 0xcb 0x35 0x01 0x18 0x28 0x00 0xd6 0x34 0x00 0xff 0x2b 0x00 0xd0 0x35 0x7f 0xff 0xff 0x7f 0xff 0xff 0x7f 0xff 0xff [... mehr Bytes ...] 
+ 0x7b 0x00 0xcb 0x35 0x01 0x18 0x28 0x00 0xd6 0x34 0x00 0xff 0x2b 0x00 0xd0 0x35 0x7f 0xff 0xff 0x7f 0xff 0xff 0x7f 0xff 0xff [... mehr Bytes, mit denen ich (noch) nichts anfangen kann ...] 
      |         |    |              |         |    |              |         |    |              |         |    |
      +---------+----+              +---------+----+              +---------+----+              +---------+----+
      |  Temp     RH |              |  Temp     RH |              |  Temp     RH |              |  Temp     RH |
@@ -114,6 +115,7 @@ Diese Module werden nun implementiert:
 | rs500reader | Liest die aktuellen Messwerte für Temperatur und Luftfeuchte aus.                                                                                              |
 | rs5002redis | Holt alle Messwerte periodisch und schreibt sie in eine Redis-Instanz. Gut als Cache und als Abfragehilfe für WebIF und Icinga-Abfrageskript (`check_rs500`).  |
 | check_rs500 | Icinga-Command, welches aus der Redis-Instanz sich die Messwerte wiederholt und entsprechend auswertet.                                                        |
+
 
 ## Was funktioniert?
 
