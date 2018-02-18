@@ -53,7 +53,7 @@ Die Station verfügt über 8 Kanäle, ich habe nur 5 Sensoren angeschlossen.
                         Kanal 2                       Kanal 4                       Kanal 6                       Kanal 8
                     +--------------+              +--------------+              +--------------+              +--------------+
                     |              |              |              |              |              |              |              |
-Header?             |  Temp     RH |              |  Temp     RH |              |  Temp     RH |              |  Temp     RH |
+  ??                |  Temp     RH |              |  Temp     RH |              |  Temp     RH |              |  Temp     RH |
 +----+              +---------+----+              +---------+----+              +---------+----+              +---------+----+
 |    |              |         |    |              |         |    |              |         |    |              |         |    |
  0x7b 0x00 0xcb 0x35 0x01 0x18 0x28 0x00 0xd6 0x34 0x00 0xff 0x2b 0x00 0xd0 0x35 0x7f 0xff 0xff 0x7f 0xff 0xff 0x7f 0xff 0xff [... mehr Bytes, mit denen ich (noch) nichts anfangen kann ...] 
@@ -78,7 +78,7 @@ Nicht verwendete Kanäle haben also den Wert `0x7f 0xff 0xff`. Alles soweit logi
 | 7     | ---        | ---         |
 | 8     | ---        | ---         |
 
-Das deckt sich mit den Display-Anzeigen. Doch wie sieht es mit negativen Temperaturen aus? Dazu habe ich extra einen Sensor eingepackt und in die Tiefkühltruhe gelegt. Das Ergebnis:
+Das deckt sich mit den Display-Anzeigen. Doch wie sieht es mit negativen Temperaturen aus? Dazu habe ich extra einen Sensor eingepackt und in die Tiefkühltruhe gelegt und gewartet, bis die Temperatur auf unter 0°C fällt. Das Ergebnis:
 
 | Antwort          | Erwartete Temperatur | Erwartete Luftfeuchte |
 |------------------|----------------------|-----------------------|
@@ -106,7 +106,7 @@ Soweit zur Theorie. Dann kann man den Spaß nun implementieren.
 
 ## Implementierung
 
-Die Implementierung ist jetzt trivial. Es gibt die wundervolle [hidapi](https://github.com/trezor/cython-hidapi), die einen extrem bequemen Zugriff erlaubt.
+Die Implementierung ist jetzt trivial, sie erfolgt in __Python 3.5__. Es gibt die wundervolle [hidapi](https://github.com/gbishop/cython-hidapi), die einen extrem bequemen Zugriff erlaubt.
 
 Diese Module werden nun implementiert:
 
