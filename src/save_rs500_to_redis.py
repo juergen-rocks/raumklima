@@ -1,7 +1,7 @@
 from os.path import dirname
 
-from .rs5002redis.saver import save_data_to_redis
-from .rs500reader.reader import Rs500Reader
+from rs5002redis.saver import save_data_to_redis
+from rs500reader.reader import Rs500Reader
 
 
 def fetch_and_save():

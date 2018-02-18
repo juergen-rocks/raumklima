@@ -43,7 +43,7 @@ class Response(object):
         }
 
     def get_channel_data(self, channel: int) -> Optional[TempHum]:
-        return self.__data.get(channel)
+        return self.__data[channel]
 
     def set_channel_data(self, channel: int, data: TempHum):
         self.__data[channel] = data

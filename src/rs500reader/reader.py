@@ -9,11 +9,11 @@ from .do import Response, TempHum
 
 class Rs500Reader(object):
 
-    def __init__(self, vendor_id = 0x0483, product_id = 0x5750):
+    def __init__(self, vendor_id=0x0483, product_id=0x5750):
         self.__vendor = vendor_id
         self.__product = product_id
 
-    def __query(self) -> Optional[bytes]:
+    def __query(self) -> Optional[list]:
         try:
             rs500_hid = hid.device()
             rs500_hid.open(self.__vendor, self.__product)
@@ -25,11 +25,11 @@ class Rs500Reader(object):
             while True:
                 d = rs500_hid.read(64)
                 if d:
-                    data += d
+                    data.extend(d)
                 else:
                     break
             rs500_hid.close()
-            return d
+            return data
         except IOError as e:
             print(e, file=stderr)
             return None
@@ -37,11 +37,11 @@ class Rs500Reader(object):
     def get_data(self) -> Optional[Response]:
         data = self.__query()
         if len(data) != 64:
-            print('ungültige Länge!', file=stderr)
+            print('ungültige Länge: ' + len(data), file=stderr)
             return None
         response = Response()
         channel = 0
-        for i in range(start=1, step=3, stop=24):
+        for i in range(1, 24, 3):
             channel += 1
             t1 = data[i]
             t2 = data[i+1]

@@ -1,4 +1,4 @@
-from .rs500reader.reader import Rs500Reader
+from rs500reader.reader import Rs500Reader
 
 
 def get_and_print():
