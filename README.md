@@ -129,3 +129,50 @@ Die Software "EasyTemp" kann weit mehr, als einfach nur die Temperaturen und Luf
 Mein Ziel lag nur im Auslesen der aktuellen Messwerte. Insofern habe ich mich um den Rest nicht gekümmert.
 
 Außerdem verkraften alle Skripte hier es nicht, wenn mehrere RS 500 angeschlossen sind.
+
+
+## Wie passt nun alles zusammen?
+
+### Raspberry Pi mit Anschluss an RS 500
+
+Auf einem Raspberry Pi habe folgendes installiert:
+
+- Raspbian Stretch
+- make
+- gcc
+- python3
+- python3-dev
+- python3-virtualenv
+- libusb-1.0-0-dev
+- libudev-dev
+- redis (Cache für die ausgelesenen Temperaturdaten)
+- shorewall (Zugriff auf Redis auf bestimmte IPs limitieren)
+
+Dann wird entsprechend ein virtualenv erzeugt, und im aktivierten Environment folgendes ausgeführt:
+
+- `pip install -r requirements-rs500reader.txt`
+- `pip install -r requirements-rs5002redis.txt`
+
+Die Installation von `hidapi` auf einem Raspberry Pi dauert _ewig_. Wirklich.
+
+Dann richte ich einen Cronjob ein, der zwei Mal pro Minute das Skript `start_save_rs500_to_redis.sh` aufruft.
+
+Redis konfiguriere ich so, dass es auch auf die IP-Adresse von `eth0` des Raspberries hört und deaktiviere jegliche Speicherung (alles mit `save` aus der Redis-Konfiguration auskommentieren). Redis-Neustart nicht vergessen.
+
+Dann noch ein bisschen Shorewall konfigurieren, so dass nur mein Monitoring-Host auf die Redis-Instanz zugreifen darf.
+
+Nun wird alle halbe Minute die RS 500 abgefragt und das Ergebnis in Redis abgelegt.
+
+### Monitoring-Host
+
+Auf dem Monitoring-Host erzeuge ich auch ein virtualenv, und führe im aktivierten Environment dieses aus:
+
+- `pip install -r requirements-check_rs500.txt`
+
+In der Datei `check_rs500.ini` konfiguriere ich den Zugang zur Redis-Instanz auf dem Raspberry Pi.
+
+Im Wiki liegen Konfig-Beispiele für Icinga2.
+
+![Beispielhafte Icinga-Service-Ansocht](./doc/img/icinga-service-overview.png "Beispielhafte Icinga-Service-Ansicht")
+
+Das wars.
