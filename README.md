@@ -6,6 +6,14 @@ __ACHTUNG! Das hier beschriebene Vorgehen kann das Gerät irreparabel schädigen
 
 __Noch ein Hinweis: Ich habe nichts mit ELV zu tun. Ich habe die Raumklimastation nur dort gekauft.__
 
+## Ausführliche Beschreibung im Blog
+
+Etwas ausführlicher als hier und mit mehr Hintergrundinformationen wird die Verwendung der RS 500 mit einem Raspberry Pi hier beschrieben:
+
+- [juergen.rocks: ELV Raumklimastation RS 500 mit Raspberry Pi unter Linux auslesen](https://juergen.rocks/art/elv-raumklimastation-rs500-raspberry-pi-linux.html "juergen.rocks: ELV Raumklimastation RS 500 mit Raspberry Pi unter Linux auslesen")
+- [juergen.rocks: ELV Raumklimastation RS 500 mit Icinga 2 auswerten und überwachen](https://juergen.rocks/art/elv-raumklimastation-rs500-icinga2.html "juergen.rocks: ELV Raumklimastation RS 500 mit Icinga 2 auswerten und überwachen")
+
+
 ## Motivation
 
 Die Station ist schick und preiswert. Dennoch würde der Anwender die Daten im Rahmen eines zentralen Monitorings weiter verwenden. So entstand meine persönliche Motivation:
