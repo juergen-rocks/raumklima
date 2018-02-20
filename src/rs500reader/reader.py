@@ -46,6 +46,6 @@ class Rs500Reader(object):
             t1 = data[i]
             t2 = data[i+1]
             hu = data[i+2]
-            if t1 != 0x7f and t2 != 0xff and hu != 0xff:
+            if not (t1 == 0x7f and t2 == 0xff and hu == 0xff):
                 response.set_channel_data(channel, TempHum.from_protocol([t1, t2], hu))
         return response
