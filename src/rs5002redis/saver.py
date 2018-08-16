@@ -10,7 +10,7 @@ def save_data_to_redis(data: dict, config_file: str) -> None:
     host = conf.get(section='redis', option='host', fallback='localhost')
     port = conf.getint(section='redis', option='port', fallback=6379)
     db = conf.getint(section='redis', option='db', fallback=0)
-    password = conf.getint(section='redis', option='password', fallback=None)
+    password = conf.get(section='redis', option='password', fallback=None)
     ttl = conf.getint(section='redis', option='result_lifetime_seconds', fallback=30)
     prefix = conf.get(section='redis', option='prefix', fallback='')
     try:
