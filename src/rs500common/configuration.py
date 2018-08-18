@@ -15,7 +15,7 @@ class ConfigProvider(object):
         return self.__config
 
 
-def discover_config_file_by_name(filename: str, script_dir: str=None, env_var: str='RS500_CONF_PATH') -> str:
+def discover_config_file_by_name(filename: str, script_dir: str=None, env_var: str='RS500_CONFIG_PATH') -> str:
     if script_dir is not None:
         candidate = join(script_dir, filename)
         if exists(candidate) and isfile(candidate):
