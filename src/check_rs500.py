@@ -7,8 +7,7 @@ from typing import Optional
 
 from redis import StrictRedis, RedisError
 
-from rs500common.configuration import ConfigProvider
-
+from rs500common.configuration import ConfigProvider, discover_config_file_by_name
 
 EXIT_CODE_OK = 0
 EXIT_CODE_WARN = 1
@@ -54,7 +53,7 @@ def check(args: argparse.Namespace, temp: Optional[float], humi: Optional[int]) 
 
 
 def handle_request(args: argparse.Namespace):
-    conf = ConfigProvider(dirname(__file__) + '/' + 'check_rs500.ini').get_config()
+    conf = ConfigProvider(discover_config_file_by_name('check_rs500.ini', dirname(__file__))).get_config()
     host = conf.get(section='redis', option='host', fallback='localhost')
     port = conf.getint(section='redis', option='port', fallback=6379)
     db = conf.getint(section='redis', option='db', fallback=0)
