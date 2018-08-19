@@ -4,3 +4,4 @@ omit =
     */venv/*
     */pyvenv/*
     */JetBrains/*
+    */virtualenv/*
