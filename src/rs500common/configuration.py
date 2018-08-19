@@ -1,6 +1,6 @@
 import configparser
 from os import getenv
-from os.path import join, exists, isfile
+import os.path
 from pathlib import Path
 
 
@@ -17,19 +17,19 @@ class ConfigProvider(object):
 
 def discover_config_file_by_name(filename: str, script_dir: str=None, env_var: str='RS500_CONFIG_PATH') -> str:
     if script_dir is not None:
-        candidate = join(script_dir, filename)
-        if exists(candidate) and isfile(candidate):
+        candidate = os.path.join(script_dir, filename)
+        if os.path.exists(candidate) and os.path.isfile(candidate):
             return candidate
     if env_var is not None:
         env_var_value = getenv(env_var, None)
         if env_var_value is not None:
-            candidate = join(env_var_value, filename)
-            if exists(candidate) and isfile(candidate):
+            candidate = os.path.join(env_var_value, filename)
+            if os.path.exists(candidate) and os.path.isfile(candidate):
                 return candidate
-    candidate = join(str(Path.home().absolute()), '.rs500', filename)
-    if exists(candidate) and isfile(candidate):
+    candidate = os.path.join(str(Path.home().absolute()), '.rs500', filename)
+    if os.path.exists(candidate) and os.path.isfile(candidate):
         return candidate
-    candidate = join('/etc', filename)
-    if exists(candidate) and isfile(candidate):
+    candidate = os.path.join('/etc', filename)
+    if os.path.exists(candidate) and os.path.isfile(candidate):
         return candidate
     raise FileNotFoundError('Unable to find configuration file "{}"'.format(filename))

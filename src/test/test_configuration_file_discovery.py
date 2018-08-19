@@ -1,4 +1,4 @@
-import os
+import os.path
 
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
@@ -7,11 +7,9 @@ from rs500common.configuration import discover_config_file_by_name
 
 
 def test_discovery(monkeypatch: MonkeyPatch):
-    def mock(path):
-        return True
     with monkeypatch.context() as m:
-        m.setattr(os.path, 'isfile', mock)
-        m.setattr(os.path, 'exists', mock)
+        m.setattr('os.path.isfile', lambda path: True)
+        m.setattr('os.path.exists', lambda path: True)
         result = discover_config_file_by_name('test.ini', '/foo/bar')
     assert result == os.path.join('/foo/bar', 'test.ini')
 
