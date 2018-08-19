@@ -8,7 +8,7 @@ from rs500common.configuration import discover_config_file_by_name
 
 
 def test_discovery_file_in_folder(monkeypatch: MonkeyPatch):
-    with monkeypatch.context() as m:
+    with monkeypatch.context() as m:  # type: MonkeyPatch
         m.setattr('os.path.isfile', lambda path: True)
         m.setattr('os.path.exists', lambda path: True)
         result = discover_config_file_by_name('test.ini', '/foo/bar')
@@ -16,7 +16,7 @@ def test_discovery_file_in_folder(monkeypatch: MonkeyPatch):
 
 
 def test_discovery_via_env_var(monkeypatch: MonkeyPatch):
-    with monkeypatch.context() as m:
+    with monkeypatch.context() as m:  # type: MonkeyPatch
         m.setenv('RS500_CONFIG_PATH', '/rs500_config_path/here/we/are')
         m.setattr('os.path.isfile', lambda path: True)
         m.setattr('os.path.exists', lambda path: True)
@@ -25,7 +25,7 @@ def test_discovery_via_env_var(monkeypatch: MonkeyPatch):
 
 
 def test_discovery_via_user_home(monkeypatch: MonkeyPatch):
-    with monkeypatch.context() as m:
+    with monkeypatch.context() as m:  # type: MonkeyPatch
         m.setattr('os.path.isfile', lambda path: True)
         m.setattr('os.path.exists', lambda path: True)
         monkeypatch.setattr(pathlib.Path, 'absolute', lambda x: '/user/home/path/test')
@@ -34,7 +34,7 @@ def test_discovery_via_user_home(monkeypatch: MonkeyPatch):
 
 
 def test_discovery_in_etc(monkeypatch: MonkeyPatch):
-    with monkeypatch.context() as m:
+    with monkeypatch.context() as m:  # type: MonkeyPatch
         m.setattr('os.path.isfile', lambda path: path.startswith('/etc'))
         m.setattr('os.path.exists', lambda path: path.startswith('/etc'))
         result = discover_config_file_by_name('test.ini')
