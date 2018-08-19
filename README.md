@@ -1,3 +1,8 @@
+| Branch  | Build Status                                                                                                                                 |
+|---------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| master  | [![Build Status master](https://travis-ci.org/juergen-rocks/raumklima.svg?branch=master)](https://travis-ci.org/juergen-rocks/raumklima)     |
+| develop | [![Build Status develop](https://travis-ci.org/juergen-rocks/raumklima.svg?branch=develop)](https://travis-ci.org/juergen-rocks/raumklima)   |
+
 # ELV Raumklimastation RS 500 unter Linux auslesen
 
 Der Elektronikversender [ELV](https://www.elv.de/) bietet unter der Artikelnummer [68-12 87 19](https://www.elv.de/elv-raumklimastation-rs500-inkl-5-sensoren-messwertespeicher-und-pc-auswertesoftware.html) eine Raumklimastation mit 5 Sensoren an, die sich über einen USB-Anschluss am PC auswerten lassen soll. Dazu liegt die proprietäre Windows-Software "EasyTemp" bei. Eine Unterstützung für Linux wird nicht angeboten.
