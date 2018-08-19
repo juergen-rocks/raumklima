@@ -1,0 +1,16 @@
+language: python
+
+python:
+  - 3.5
+  - 3.6
+  - 3.7
+
+virtualenv:
+  system_site_packages: true
+
+install:
+  pip install -r src/requirements-test.txt
+
+script:
+  - cd src
+  - py.test --cov --cov-report term-missing --cov-config .coveragerc test/
