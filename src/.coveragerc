@@ -1,0 +1,7 @@
+[run]
+omit =
+    test/*
+    */venv/*
+    */pyvenv/*
+    */JetBrains/*
+    */virtualenv/*
