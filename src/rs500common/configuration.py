@@ -1,7 +1,7 @@
 import configparser
 from os import getenv
 import os.path
-from pathlib import Path
+import pathlib
 
 
 class ConfigProvider(object):
@@ -9,7 +9,8 @@ class ConfigProvider(object):
     def __init__(self, file: str):
         self.__config = configparser.ConfigParser()
         self.__config.optionxform = str
-        self.__config.read(file)
+        with open(file, 'r') as fp:
+            self.__config.read_file(fp)
 
     def get_config(self) -> configparser.ConfigParser:
         return self.__config
@@ -26,7 +27,7 @@ def discover_config_file_by_name(filename: str, script_dir: str=None, env_var: s
             candidate = os.path.join(env_var_value, filename)
             if os.path.exists(candidate) and os.path.isfile(candidate):
                 return candidate
-    candidate = os.path.join(str(Path.home().absolute()), '.rs500', filename)
+    candidate = os.path.join(str(pathlib.Path.home().absolute()), '.rs500', filename)
     if os.path.exists(candidate) and os.path.isfile(candidate):
         return candidate
     candidate = os.path.join('/etc', filename)
