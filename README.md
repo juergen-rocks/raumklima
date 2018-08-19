@@ -191,3 +191,9 @@ Im Wiki liegen Konfig-Beispiele für Icinga2.
 ![Beispielhafte Icinga-Service-Ansocht](./doc/img/icinga-service-overview.png "Beispielhafte Icinga-Service-Ansicht")
 
 Das wars.
+
+# Tests durchführen
+
+Die Tests befinden sich in `src/test`. Für die Durchführung der Tests sind die zusätzlichen Abhängigkeiten aus `requirements-test.txt` erforderlich.
+
+Zur Testausführung im Ordner `src` einfach `py.test --cov --cov-report term-missing --cov-config .coveragerc test/` aufrufen.
