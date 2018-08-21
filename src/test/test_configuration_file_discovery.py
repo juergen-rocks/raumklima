@@ -12,7 +12,7 @@ def test_discovery_file_in_folder(monkeypatch: MonkeyPatch):
         m.setattr('os.path.isfile', lambda path: True)
         m.setattr('os.path.exists', lambda path: True)
         result = discover_config_file_by_name('test.ini', '/foo/bar')
-    assert result == os.path.join('/foo/bar', 'test.ini')
+    assert os.path.join('/foo/bar', 'test.ini') == result
 
 
 def test_discovery_via_env_var(monkeypatch: MonkeyPatch):
@@ -21,7 +21,7 @@ def test_discovery_via_env_var(monkeypatch: MonkeyPatch):
         m.setattr('os.path.isfile', lambda path: True)
         m.setattr('os.path.exists', lambda path: True)
         result = discover_config_file_by_name('test.ini', script_dir=None)
-    assert result == os.path.join('/rs500_config_path/here/we/are', 'test.ini')
+    assert os.path.join('/rs500_config_path/here/we/are', 'test.ini') == result
 
 
 def test_discovery_via_user_home(monkeypatch: MonkeyPatch):
@@ -30,7 +30,7 @@ def test_discovery_via_user_home(monkeypatch: MonkeyPatch):
         m.setattr('os.path.exists', lambda path: True)
         monkeypatch.setattr(pathlib.Path, 'absolute', lambda x: '/user/home/path/test')
         result = discover_config_file_by_name('test.ini', script_dir=None)
-    assert result == os.path.join('/user/home/path/test', '.rs500', 'test.ini')
+    assert os.path.join('/user/home/path/test', '.rs500', 'test.ini') == result
 
 
 def test_discovery_in_etc(monkeypatch: MonkeyPatch):
@@ -38,7 +38,7 @@ def test_discovery_in_etc(monkeypatch: MonkeyPatch):
         m.setattr('os.path.isfile', lambda path: path.startswith('/etc'))
         m.setattr('os.path.exists', lambda path: path.startswith('/etc'))
         result = discover_config_file_by_name('test.ini')
-    assert result == os.path.join('/etc', 'test.ini')
+    assert os.path.join('/etc', 'test.ini') == result
 
 
 def test_no_hit():
