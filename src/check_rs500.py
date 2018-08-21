@@ -31,7 +31,7 @@ def min_max_check(value, min_val, max_val) -> bool:
 
 
 def check(args: argparse.Namespace, temp: Optional[float], humi: Optional[int]) -> int:
-    output_format = '{{}}: {{}}; channel = {} temp = {}, humi = {}'.format(args.channel, temp, humi)
+    output_format = '{{}}: {{}}; channel = {} -> temp = {}, humi = {}'.format(args.channel, temp, humi)
 
     if temp != 'unknown':
         if not min_max_check(temp, args.min_temp, args.max_temp):
@@ -74,11 +74,11 @@ def handle_request(args: argparse.Namespace):
         if raw_value_humi is not None:
             humi = int(bytes(raw_value_humi).decode())
         if any([args.min_temp is not None, args.max_temp is not None, args.min_warn_temp is not None, args.max_warn_temp is not None]) and raw_value_temp is None:
-            print('{}: Should check temperature, but temperature is unknown; channel = {} temp = {}, humi = {}'.format(EXIT_WORD_CRIT, args.channel, temp, humi))
+            print('{}: Should check temperature, but temperature is unknown; channel = {} -> temp = {}, humi = {}'.format(EXIT_WORD_CRIT, args.channel, temp, humi))
             exit(EXIT_CODE_CRIT)
             return
         if any([args.min_hum is not None, args.max_hum is not None, args.min_warn_hum is not None, args.max_warn_hum is not None]) and raw_value_humi is None:
-            print('{}: Should check humidity, but humidity is unknown; channel = {} temp = {}, humi = {}'.format(EXIT_WORD_CRIT, args.channel, temp, humi))
+            print('{}: Should check humidity, but humidity is unknown; channel = {} -> temp = {}, humi = {}'.format(EXIT_WORD_CRIT, args.channel, temp, humi))
             exit(EXIT_CODE_CRIT)
             return
         exit_code = check(args, temp, humi)
