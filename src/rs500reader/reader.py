@@ -13,7 +13,7 @@ class Rs500Reader(object):
         self.__vendor = vendor_id
         self.__product = product_id
 
-    def __query(self) -> Optional[list]:
+    def __query(self) -> list:
         try:
             rs500_hid = hid.device()
             rs500_hid.open(self.__vendor, self.__product)
@@ -31,13 +31,20 @@ class Rs500Reader(object):
             rs500_hid.close()
             return data
         except IOError as e:
-            print(e, file=stderr)
-            return None
+            print(
+                'Lesefehler beim Lesen von des HID Devices: "{}"; entweder ist die Hardware nicht vorhanden oder '
+                'defekt, oder es liegt ein Rechteproblem vor.'.format(e),
+                file=stderr
+            )
+            raise
 
     def get_data(self) -> Optional[Response]:
-        data = self.__query()
+        try:
+            data = self.__query()
+        except IOError:
+            return None
         if len(data) != 64:
-            print('ungültige Länge: ' + len(data), file=stderr)
+            print('ungültige Länge: {}'.format(len(data)), file=stderr)
             return None
         response = Response()
         channel = 0
