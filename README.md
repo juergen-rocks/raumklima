@@ -1,3 +1,5 @@
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=juergen-rocks/raumklima)](https://dependabot.com)
+
 | Branch  | Build Status                                                                                                                                 |
 |---------|----------------------------------------------------------------------------------------------------------------------------------------------|
 | master  | [![Build Status master](https://travis-ci.org/juergen-rocks/raumklima.svg?branch=master)](https://travis-ci.org/juergen-rocks/raumklima)     |
