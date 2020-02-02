@@ -1,8 +1,8 @@
 language: python
 
-dist:
-  - xenial
-  - bionic
+os: linux
+arch: arm64
+dist: bionic
 
 python:
   - 3.5
