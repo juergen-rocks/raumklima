@@ -1,1 +1,1 @@
-hidapi==0.9.0.post1
+hidapi==0.9.0.post2
