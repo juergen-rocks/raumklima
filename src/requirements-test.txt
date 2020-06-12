@@ -1,2 +1,2 @@
 pytest>=3.7.2,<5.5
-pytest-cov>=2.5.1,<2.10
+pytest-cov>=2.5.1,<2.11
