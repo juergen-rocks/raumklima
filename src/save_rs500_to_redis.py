@@ -16,7 +16,7 @@ def fetch_and_save():
             if values is not None:
                 to_save['c{}_temp'.format(channel)] = values.temperature
                 to_save['c{}_humi'.format(channel)] = values.humidity
-        save_data_to_redis(to_save, discover_config_file_by_name('rs5002redis.ini', dirname(__file__)))
+        save_data_to_redis(to_save, discover_config_file_by_name('rs5002backend.ini', dirname(__file__)))
 
 
 if __name__ == '__main__':
