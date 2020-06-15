@@ -1,6 +1,8 @@
 from sys import stderr
 
 import paho.mqtt.client as mqtt
+import paho.mqtt.properties as mqttProperties
+import paho.mqtt.packettypes as mqttPackettypes
 
 from rs500common.configuration import ConfigProvider
 
@@ -21,6 +23,8 @@ def save_data_to_mqtt(data: dict, config_file:str) -> None:
     topic_prefix =  conf.get(section="mqtt", option="topic_prefix", fallback="rs500")
     topic_suffix =  conf.get(section="mqtt", option="topic_suffix", fallback="")
     topic_string =  conf.get(section="mqtt", option="topic_string", fallback="{0}/{1}/{2}{3}")
+
+    msg_expiry = conf.get(section="mqtt", option="expiry_time" , fallback="False")
 
     qos = conf.getint(section="mqtt", option="qos" , fallback=1 )
     retain_s = conf.get(section="mqtt", option="retain" , fallback="False")
@@ -46,11 +50,17 @@ def save_data_to_mqtt(data: dict, config_file:str) -> None:
 
     publisedMessages = []
 
+    if msg_expiry != "False":
+        msg_property = mqttProperties(mqttPackettypes.PUBLISH)
+        msg_property.MessageExpiryInterval = int(msg_expiry)
+    else:
+        msg_property = None
+
     client.loop_start()
     for k,v in data.items():
        ( channel, val_typ ) = k.split("_")
        topic = topic_string.format(topic_prefix, channel, val_typ, topic_suffix )
-       msgInfo = client.publish( topic = topic , payload = str(v) , retain=retain , qos = qos)
+       msgInfo = client.publish( topic = topic , payload = str(v) , retain=retain , qos = qos, properties = msg_property)
        publisedMessages.append(msgInfo)
 
 
