@@ -58,8 +58,6 @@ def save_data_to_mqtt(data: dict, config_file:str) -> None:
        msgi.wait_for_publish()
        if msgi.rc !=  0:
             print ("Publish RC: " + mqtt.error_string(msgi.rc))
-       else:
-            print ("OK")
 
     client.loop_stop()
     client.disconnect()
