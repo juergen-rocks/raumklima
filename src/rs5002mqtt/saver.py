@@ -44,15 +44,20 @@ def save_data_to_mqtt(data: dict, config_file:str) -> None:
 
     client.connect( host, port )
 
+    publisedMessages = []
 
     client.loop_start()
     for k,v in data.items():
        ( channel, val_typ ) = k.split("_")
        topic = topic_string.format(topic_prefix, channel, val_typ, topic_suffix )
        msgInfo = client.publish( topic = topic , payload = str(v) , retain=retain , qos = qos)
-       msgInfo.wait_for_publish()
-       if msgInfo.rc !=  0:
-           print ("Publish RC: " + mqtt.error_string(msgInfo.rc))
+       publisedMessages.append(msgInfo)
+
+
+    for msgi in publisedMessages:
+       msgi.wait_for_publish()
+       if msgi.rc !=  0:
+            print ("Publish RC: " + mqtt.error_string(msgi.rc))
 
     client.loop_stop()
     client.disconnect()
