@@ -28,14 +28,13 @@ def save_data_to_mqtt(data: dict, config_file: str) -> None:
     qos = conf.getint(section="mqtt", option="qos", fallback=1)
     retain_s = conf.get(section="mqtt", option="retain", fallback="false")
 
-    username = conf.get(section="mqtt", option="username", fallback=None)  # Fallback nach "None" ist schlüssiger
-    password = conf.get(section="mqtt", option="password", fallback=None)  # -- " --
+    username = conf.get(section="mqtt", option="username", fallback=None)
+    password = conf.get(section="mqtt", option="password", fallback=None)
 
     retain = False
-    # Eine etwas sichere Variante gegen Fehlkonfiguration
     if retain_s.lower() == "true" or retain_s == "1":
         retain = True
-    clean_session = True  # Feld wird nicht verwendet?
+
     client = mqtt.Client(client_id=client_id, protocol=mqtt.MQTTv5)
     client.on_connect = on_connect
 
@@ -50,7 +49,7 @@ def save_data_to_mqtt(data: dict, config_file: str) -> None:
         msg_property = Properties(PacketTypes.PUBLISH)
         try:
             msg_property.MessageExpiryInterval = int(msg_expiry)
-        except ValueError as ex:  # Als Vorschlag für bessere Fehlermeldungen beim Parsen der Config-Optionen
+        except ValueError as ex:
             raise ValueError("Configuration Error for 'expiry_time'", ex)
     else:
         msg_property = None
@@ -65,7 +64,7 @@ def save_data_to_mqtt(data: dict, config_file: str) -> None:
     for published_message in published_messages:
         published_message.wait_for_publish()
         if published_message.rc != 0:
-            print("Publish RC: " + mqtt.error_string(published_message.rc))
+            print("Publish RC: {}".format(mqtt.error_string(published_message.rc)), file=stderr)
 
     client.loop_stop()
     client.disconnect()
