@@ -130,7 +130,8 @@ Diese Module werden nun implementiert:
 | rs500reader | Liest die aktuellen Messwerte für Temperatur und Luftfeuchte aus.                                                                                              |
 | rs5002redis | Holt alle Messwerte periodisch und schreibt sie in eine Redis-Instanz. Gut als Cache und als Abfragehilfe für WebIF und Icinga-Abfrageskript (`check_rs500`).  |
 | check_rs500 | Icinga-Command, welches aus der Redis-Instanz sich die Messwerte wiederholt und entsprechend auswertet.                                                        |
-
+| rs5002mqtt | Holt alle Messwerte periodisch und schickt diese an einen MQTT Broker um von dort weiter zu verarbeitet werden.  |
+| check_mqtt | Testet das MQTT Setup und die Konfiguration mit einem Demotopic. |
 
 ## Was funktioniert?
 
@@ -179,6 +180,12 @@ Dann noch ein bisschen Shorewall konfigurieren, so dass nur mein Monitoring-Host
 Nun wird alle halbe Minute die RS 500 abgefragt und das Ergebnis in Redis abgelegt.
 
 Dazu kann man jetzt noch ein kleines Web-Interface nutzen: [https://github.com/juergen-rocks/raumklima-web](https://github.com/juergen-rocks/raumklima-web)
+
+Optional können die Daten über MQTT publiziert werden. Hierzu ist paho-mqtt nötig. Die nötigen Module können ebenso wie folgt installiert werden:
+
+- `pip install -r requirements-rs5002mqtt.txt`
+
+Mit dem Skript `save_rs500_to_backend.py` kann entsprechend der `rs5002backend.ini` ran Redis und/oder MQTT gleichzeitig geschrieben werden. Die Wetterstation wird dabei nur einmal abgefragt.
 
 ### Monitoring-Host
 
