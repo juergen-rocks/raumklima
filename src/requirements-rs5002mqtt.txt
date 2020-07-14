@@ -1,2 +1,2 @@
-hidapi==0.9.0.post2
+hidapi==0.9.0.post3
 paho-mqtt>=1.6.0
