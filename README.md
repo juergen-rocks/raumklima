@@ -5,13 +5,17 @@
 | master  | [![Build Status master](https://travis-ci.org/juergen-rocks/raumklima.svg?branch=master)](https://travis-ci.org/juergen-rocks/raumklima)     |
 | develop | [![Build Status develop](https://travis-ci.org/juergen-rocks/raumklima.svg?branch=develop)](https://travis-ci.org/juergen-rocks/raumklima)   |
 
-# ELV Raumklimastation RS 500 unter Linux auslesen
+# ELV Raumklimastation RS 500 bzw. dnt RoomLogg Pro unter Linux auslesen
 
-Der Elektronikversender [ELV](https://www.elv.de/) bietet unter der Artikelnummer [68-12 87 19](https://www.elv.de/elv-raumklimastation-rs500-inkl-5-sensoren-messwertespeicher-und-pc-auswertesoftware.html) eine Raumklimastation mit 5 Sensoren an, die sich über einen USB-Anschluss am PC auswerten lassen soll. Dazu liegt die proprietäre Windows-Software "EasyTemp" bei. Eine Unterstützung für Linux wird nicht angeboten.
+Der Elektronikversender [ELV](https://www.elv.de/) bot unter der Artikelnummer [68-12 87 19](https://www.elv.de/elv-raumklimastation-rs500-inkl-5-sensoren-messwertespeicher-und-pc-auswertesoftware.html) eine Raumklimastation mit 5 Sensoren an, die sich über einen USB-Anschluss am PC auswerten lassen soll.
+
+Dies gilt auch für den Nachfolger "dnt RoomLogg pro", der inzwischen unter der Artikelnummer [25 13 49](https://de.elv.com/dnt-spar-set-funk-raumklimastation-roomlogg-pro-mit-8-thermo-hygrosensoren-und-auswertesoftware-251349) angeboten wird. Eine kurze Diskussion zu "dnt RoomLogg pro" gibt es im Issue [raumklima/#40](https://github.com/juergen-rocks/raumklima/issues/40).
+
+Neiden liegt die proprietäre Windows-Software "EasyTemp" bzw. "RoomLogg" bei. Eine Unterstützung für Linux wird nicht angeboten.
 
 __ACHTUNG! Das hier beschriebene Vorgehen kann das Gerät irreparabel schädigen! Hier werden Annahmen getroffen, die sich aufgrund fehlender Dokumentation nicht bestätigen ließen! Es wird keinerlei Support geleistet! Es wird keinerlei Garantie oder Gewährleistung für die korrekte Funktionsweise oder Ungefährlichkeit übernommen.__
 
-__Noch ein Hinweis: Ich habe nichts mit ELV zu tun. Ich habe die Raumklimastation nur dort gekauft.__
+__Noch ein Hinweis: Ich habe nichts mit ELV zu tun. Ich habe die Raumklimastation RS 500 nur dort gekauft.__
 
 ## Ausführliche Beschreibung im Blog
 
