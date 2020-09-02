@@ -11,7 +11,7 @@ Der Elektronikversender [ELV](https://www.elv.de/) bot unter der Artikelnummer [
 
 Dies gilt auch für den Nachfolger "dnt RoomLogg pro", der inzwischen unter der Artikelnummer [25 13 49](https://de.elv.com/dnt-spar-set-funk-raumklimastation-roomlogg-pro-mit-8-thermo-hygrosensoren-und-auswertesoftware-251349) angeboten wird. Eine kurze Diskussion zu "dnt RoomLogg pro" gibt es im Issue [raumklima/#40](https://github.com/juergen-rocks/raumklima/issues/40). Die RoomLogg Pro und die RS 500 sind offensichtlich baugleich.
 
-Neiden liegt die proprietäre Windows-Software "EasyTemp" bzw. "RoomLogg" bei. Eine Unterstützung für Linux wird nicht angeboten.
+Beiden liegt eine proprietäre Windows-Software "EasyTemp" bzw. "RoomLogg" bei. Eine Unterstützung für Linux wird nicht angeboten.
 
 __ACHTUNG! Das hier beschriebene Vorgehen kann das Gerät irreparabel schädigen! Hier werden Annahmen getroffen, die sich aufgrund fehlender Dokumentation nicht bestätigen ließen! Es wird keinerlei Support geleistet! Es wird keinerlei Garantie oder Gewährleistung für die korrekte Funktionsweise oder Ungefährlichkeit übernommen.__
 
