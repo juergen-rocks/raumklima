@@ -57,10 +57,11 @@ def handle_request(args: argparse.Namespace):
     host = conf.get(section='redis', option='host', fallback='localhost')
     port = conf.getint(section='redis', option='port', fallback=6379)
     db = conf.getint(section='redis', option='db', fallback=0)
+    socket_timeout = conf.getint(section='redis', option='socket_timeout', fallback=30)
     password = conf.getint(section='redis', option='password', fallback=None)
     prefix = conf.get(section='redis', option='prefix', fallback='')
     try:
-        redis = StrictRedis(host=host, port=port, db=db, password=password)
+        redis = StrictRedis(host=host, port=port, db=db, password=password, socket_timeout=socket_timeout)
         raw_value_temp = redis.get('{0}c{1}_temp'.format(prefix, args.channel))
         raw_value_humi = redis.get('{0}c{1}_humi'.format(prefix, args.channel))
         if raw_value_temp is None and raw_value_humi is None:
