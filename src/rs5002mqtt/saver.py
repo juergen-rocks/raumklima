@@ -18,6 +18,7 @@ def save_data_to_mqtt(data: dict, config_file: str) -> None:
     conf = ConfigProvider(config_file).get_config()
     host = conf.get(section="mqtt", option="host", fallback="localhost")
     port = conf.getint(section="mqtt", option="port", fallback=1883)
+    keepalive = conf.getint(section="mqtt", option="keepalive", fallback=10)
     client_id = conf.get(section="mqtt", option="clientid", fallback="rs5002mqtt")
     topic_prefix = conf.get(section="mqtt", option="topic_prefix", fallback="rs500")
     topic_suffix = conf.get(section="mqtt", option="topic_suffix", fallback="")
@@ -41,7 +42,7 @@ def save_data_to_mqtt(data: dict, config_file: str) -> None:
     if username is not None and password is not None:
         client.username_pw_set(username, password)
 
-    client.connect(host, port)
+    client.connect(host, port, keepalive=keepalive )
 
     published_messages = []
 

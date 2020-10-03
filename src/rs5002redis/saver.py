@@ -9,12 +9,13 @@ def save_data_to_redis(data: dict, config_file: str) -> None:
     conf = ConfigProvider(config_file).get_config()
     host = conf.get(section='redis', option='host', fallback='localhost')
     port = conf.getint(section='redis', option='port', fallback=6379)
+    socket_timeout = conf.getint(section='redis', option='socket_timeout', fallback=30)
     db = conf.getint(section='redis', option='db', fallback=0)
     password = conf.get(section='redis', option='password', fallback=None)
     ttl = conf.getint(section='redis', option='result_lifetime_seconds', fallback=30)
     prefix = conf.get(section='redis', option='prefix', fallback='')
     try:
-        redis = StrictRedis(host=host, port=port, db=db, password=password)
+        redis = StrictRedis(host=host, port=port, db=db, password=password, socket_timeout=socket_timeout)
         with redis.pipeline() as pipe:
             for k, v in data.items():
                 key = '{0}{1}'.format(prefix, k)
