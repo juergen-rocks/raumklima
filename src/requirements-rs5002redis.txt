@@ -1,2 +1,2 @@
-hidapi==0.10.1
+hidapi==0.11.0.post2
 redis==3.5.3
