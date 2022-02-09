@@ -1,2 +1,2 @@
 hidapi==0.10.1
-redis==3.5.3
+redis==4.1.3
