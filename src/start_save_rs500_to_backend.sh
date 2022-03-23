@@ -2,5 +2,4 @@
 
 cd "$(dirname "$0")"
 
-. ../venv/bin/activate
-./save_rs500_to_backend.py
+poetry run save_rs500_to_backend.py

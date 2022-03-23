@@ -1,9 +1,4 @@
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=juergen-rocks/raumklima)](https://dependabot.com)
-
-| Branch  | Build Status                                                                                                                                 |
-|---------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| master  | [![Build Status master](https://travis-ci.org/juergen-rocks/raumklima.svg?branch=master)](https://travis-ci.org/juergen-rocks/raumklima)     |
-| develop | [![Build Status develop](https://travis-ci.org/juergen-rocks/raumklima.svg?branch=develop)](https://travis-ci.org/juergen-rocks/raumklima)   |
+[![.github/workflows/ci.yml](https://github.com/juergen-rocks/raumklima/actions/workflows/ci.yml/badge.svg)](https://github.com/juergen-rocks/raumklima/actions/workflows/ci.yml)
 
 # ELV Raumklimastation RS 500 bzw. dnt RoomLogg Pro unter Linux auslesen
 
@@ -135,7 +130,6 @@ Diese Module werden nun implementiert:
 | rs5002redis | Holt alle Messwerte periodisch und schreibt sie in eine Redis-Instanz. Gut als Cache und als Abfragehilfe für WebIF und Icinga-Abfrageskript (`check_rs500`).  |
 | check_rs500 | Icinga-Command, welches aus der Redis-Instanz sich die Messwerte wiederholt und entsprechend auswertet.                                                        |
 | rs5002mqtt | Holt alle Messwerte periodisch und schickt diese an einen MQTT Broker um von dort weiter zu verarbeitet werden.  |
-| check_mqtt | Testet das MQTT Setup und die Konfiguration mit einem Demotopic. |
 
 ## Was funktioniert?
 
@@ -168,10 +162,11 @@ Auf einem Raspberry Pi habe folgendes installiert:
 - redis (Cache für die ausgelesenen Temperaturdaten)
 - shorewall (Zugriff auf Redis auf bestimmte IPs limitieren)
 
-Dann wird entsprechend ein virtualenv erzeugt, und im aktivierten Environment folgendes ausgeführt:
+Außerdem wird Poetry installiert. Weitere Informationen zu Poetry: [https://python-poetry.org/](https://python-poetry.org/)
 
-- `pip install -r requirements-rs500reader.txt`
-- `pip install -r requirements-rs5002redis.txt`
+Mit Poetry lässt sich nun schnell das passende Virtualenv erzeugen und ausstatten:
+
+- `poetry install --no-dev -E rs500reader -E rs5002redis`
 
 Die Installation von `hidapi` auf einem Raspberry Pi dauert _ewig_. Wirklich.
 
@@ -187,15 +182,15 @@ Dazu kann man jetzt noch ein kleines Web-Interface nutzen: [https://github.com/j
 
 Optional können die Daten über MQTT publiziert werden. Hierzu ist paho-mqtt nötig. Die nötigen Module können ebenso wie folgt installiert werden:
 
-- `pip install -r requirements-rs5002mqtt.txt`
+- `poetry install --no-dev -E rs5002mqtt`
 
-Mit dem Skript `save_rs500_to_backend.py` kann entsprechend der `rs5002backend.ini` ran Redis und/oder MQTT gleichzeitig geschrieben werden. Die Wetterstation wird dabei nur einmal abgefragt.
+Mit dem Skript `save_rs500_to_backend.py` kann entsprechend der `rs5002backend.ini` dann Redis und/oder MQTT gleichzeitig geschrieben werden. Die Wetterstation wird dabei nur einmal abgefragt.
 
 ### Monitoring-Host
 
 Auf dem Monitoring-Host erzeuge ich auch ein virtualenv, und führe im aktivierten Environment dieses aus:
 
-- `pip install -r requirements-check_rs500.txt`
+- `poetry install --no-dev -E check_rs500`
 
 In der Datei `check_rs500.ini` konfiguriere ich den Zugang zur Redis-Instanz auf dem Raspberry Pi.
 
@@ -207,6 +202,6 @@ Das wars.
 
 # Tests durchführen
 
-Die Tests befinden sich in `src/test`. Für die Durchführung der Tests sind die zusätzlichen Abhängigkeiten aus `requirements-test.txt` erforderlich.
+Die Tests befinden sich in `src/test`. Für die Durchführung der Tests sind zusätzliche Abhängigkeiten erforderlich. Sie stehen zur Verfügung, wenn einfach `poetry install` im Ordner `src` ausgeführt wurde. 
 
-Zur Testausführung im Ordner `src` einfach `py.test --cov --cov-report term-missing --cov-config .coveragerc test/` aufrufen.
+Die Ausführung erfolgt im Ordner `src` mit dem Befehl `poetry run pytest`.
