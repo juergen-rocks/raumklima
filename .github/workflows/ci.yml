@@ -1,0 +1,60 @@
+on: 
+  push:
+  pull_request:
+    branches: 
+      - develop
+      - main
+
+jobs:
+
+  test:
+    name: Testing with Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ '3.8', '3.9', '3.10' ]
+        os: [ 'ubuntu-latest', 'ubuntu-20.04', 'ubuntu-18.04', 'windows-latest', 'macos-latest' ]
+        architecture: [ 'x64' ] 
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    - name: Python Installation
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: ${{ matrix.architecture }}
+    - name: Update pip/wheel/setuptools
+      run: python -m pip install -U pip wheel setuptools
+    - name: Poetry Installation
+      run: python -m pip install poetry
+    - name: poetry install
+      run: (cd src && poetry install)
+    - name: Poetry Python Version Output
+      run: (cd src && poetry run python --version)
+    - name: PyTest
+      run: (cd src && poetry run pytest)
+    - name: Upload Unit Test Results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: Unit Test Results (Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }})
+        path: 'src/test-reports/raumklima.xml'
+
+  publish-test-results:
+    name: "Publish Unit Tests Results"
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Download Unit Test Result Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        with:
+          files: "artifacts/**/*.xml"

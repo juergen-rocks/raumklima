@@ -42,7 +42,7 @@ def save_data_to_mqtt(data: dict, config_file: str) -> None:
     if username is not None and password is not None:
         client.username_pw_set(username, password)
 
-    client.connect(host, port, keepalive=keepalive )
+    client.connect(host, port, keepalive=keepalive)
 
     published_messages = []
 
