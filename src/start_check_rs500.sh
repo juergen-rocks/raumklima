@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")"
 
-poetry run check_rs500.py $@
+poetry run python check_rs500.py $@

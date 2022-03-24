@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")"
 
-poetry run save_rs500_to_backend.py
+poetry run python save_rs500_to_backend.py
