@@ -7,8 +7,8 @@ on:
 
 jobs:
 
-  test:
-    name: Testing with Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }}
+  unit-test:
+    name: Unit Testing with Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -43,9 +43,45 @@ jobs:
         name: Unit Test Results (Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }})
         path: 'src/test-reports/raumklima.xml'
 
+  functional-test:
+    name: Functional Testing with Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ '3.8', '3.9', '3.10' ]
+        os: [ 'ubuntu-latest', 'ubuntu-20.04', 'ubuntu-18.04', 'windows-latest', 'macos-latest' ]
+        architecture: [ 'x64' ]
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    - name: Python Installation
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: ${{ matrix.architecture }}
+    - name: Update pip/wheel/setuptools
+      run: python -m pip install -U pip wheel setuptools
+    - name: Poetry Installation
+      run: python -m pip install poetry
+    - name: poetry install
+      run: (cd src && poetry install)
+    - name: Poetry Python Version Output
+      run: (cd src && poetry run python --version)
+    - name: Behave
+      run: (cd src && poetry run behave --summary --junit --junit-directory=test-reports/bdd/)
+    - name: Upload Functional Test Results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: Functional Test Results (Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }})
+        path: 'src/test-reports/bdd/'
+
   publish-test-results:
-    name: "Publish Unit Tests Results"
-    needs: test
+    name: "Publish Test Results"
+    needs: [ unit-test, functional-test ]
     runs-on: ubuntu-latest
     if: always()
 
