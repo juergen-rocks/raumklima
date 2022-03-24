@@ -1,5 +1,5 @@
 [tool.pytest.ini_options]
-addopts = "-ra -q --black --cov --cov-report term-missing --cov-config .coveragerc --junitxml=test-reports/raumklima.xml"
+addopts = "--black --cov --cov-report term-missing --cov-config .coveragerc --junitxml=test-reports/raumklima.xml --gherkin-terminal-reporter --cucumberjson=test-reports/raumklima.bdd.json"
 filterwarnings=[
     "ignore:.*BlackItem.*:_pytest.warning_types.PytestDeprecationWarning",
     "ignore:.*BlackItem.*:_pytest.warning_types.PytestRemovedIn8Warning",
@@ -34,6 +34,7 @@ paho-mqtt = {version = "^1.6.1", extras = ["rs5002mqtt"], optional= true}
 pytest = "^7.1.1"
 pytest-cov = "^3.0.0"
 pytest-black = "^0.3.12"
+pytest-bdd = "^5.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
