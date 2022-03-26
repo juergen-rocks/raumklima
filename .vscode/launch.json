@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "pytest",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "justMyCode": false,
+            "args": [
+                "--pdb"
+            ],
+            "cwd": "${workspaceFolder}/src"
+        },
+        {
+            "name": "behave",
+            "type": "python",
+            "request": "launch",
+            "module": "behave",
+            "justMyCode": false,
+            "args": [
+            ],
+            "cwd": "${workspaceFolder}/src"
+        }
+    ]
+}
