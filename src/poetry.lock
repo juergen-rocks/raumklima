@@ -342,10 +342,16 @@ category = "main"
 optional = true
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
+[extras]
+check_rs500 = ["hidapi", "redis"]
+rs5002mqtt = ["hidapi", "paho-mqtt"]
+rs5002redis = ["hidapi", "redis"]
+rs500reader = ["hidapi"]
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "6f239c7c833b6f73f7d4ce79816c93e23210644be5cb9a8b3711cf54d701158e"
+content-hash = "04e5de4b64056043f7f27d0dc2d54c100632fa317af0076088c0b99f9ea9fd89"
 
 [metadata.files]
 async-timeout = [

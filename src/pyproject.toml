@@ -26,15 +26,21 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-hidapi = {version = "^0.11.0", extras = ["rs500reader", "rs5002redis", "rs5002mqtt"], optional = true}
-redis = {version = "^4.1.4", extras = ["check_rs500", "rs5002redis"], optional = true}
-paho-mqtt = {version = "^1.6.1", extras = ["rs5002mqtt"], optional= true}
+hidapi = {version = "^0.11.0", optional = true}
+redis = {version = "^4.1.4", optional = true}
+paho-mqtt = {version = "^1.6.1", optional= true}
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.1"
 pytest-cov = "^3.0.0"
 pytest-black = "^0.3.12"
 behave = "^1.2.6"
+
+[tool.poetry.extras]
+rs500reader = ["hidapi"]
+rs5002redis = ["hidapi", "redis"]
+rs5002mqtt = ["hidapi", "paho-mqtt"]
+check_rs500 = ["hidapi", "redis"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
