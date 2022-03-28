@@ -83,10 +83,6 @@ jobs:
       checks: write
       pull-requests: write
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
       - name: Download Unit Test Result Artifacts
         uses: actions/download-artifact@v2
         with:
@@ -99,6 +95,7 @@ jobs:
           MERGE_COVERAGE_FILES: false
           MINIMUM_GREEN: 99
           MINIMUM_ORANGE: 95
+          COVERAGE_FILE: 'artifacts/**/.coverage'
       - name: Store Pull Request comment to be posted
         uses: actions/upload-artifact@v2
         if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
