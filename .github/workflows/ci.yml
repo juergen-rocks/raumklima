@@ -73,32 +73,3 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         with:
           files: "artifacts/**/*.xml"
-
-  publish-coverage:
-    name: "Publish Coverage"
-    needs: [ test ]
-    runs-on: ubuntu-latest
-    if: always()
-    permissions:
-      checks: write
-      pull-requests: write
-    steps:
-      - name: Download Unit Result Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: artifacts
-      - name: Publish Coverage Comment
-        id: coverage_comment
-        uses: ewjoachim/python-coverage-comment-action@v2
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_COVERAGE_FILES: false
-          MINIMUM_GREEN: 99
-          MINIMUM_ORANGE: 95
-          COVERAGE_FILE: 'artifacts/**/.coverage'
-      - name: Store Pull Request comment to be posted
-        uses: actions/upload-artifact@v2
-        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
-        with:
-          name: python-coverage-comment-action
-          path: python-coverage-comment-action.txt
