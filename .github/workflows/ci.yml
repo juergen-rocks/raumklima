@@ -47,7 +47,7 @@ jobs:
       with:
         name: Unit Test Coverage (Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }})
         path: 'src/.coverage'
-    - name: Behave (Functional Tests
+    - name: Behave (Functional Tests)
       run: (cd src && poetry run behave --summary --junit --junit-directory=test-reports/bdd/ --tags ~@manual)
     - name: Upload Functional Test Results
       if: always()
@@ -96,9 +96,9 @@ jobs:
         uses: ewjoachim/python-coverage-comment-action@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_COVERAGE_FILES: true
+          MERGE_COVERAGE_FILES: false
           MINIMUM_GREEN: 99
-          MINIMUM_YELLOW: 95
+          MINIMUM_ORANGE: 95
       - name: Store Pull Request comment to be posted
         uses: actions/upload-artifact@v2
         if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
