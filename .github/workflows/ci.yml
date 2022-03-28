@@ -65,7 +65,7 @@ jobs:
       checks: write
       pull-requests: write
     steps:
-      - name: Download Unit Test Result Artifacts
+      - name: Download Test Result Artifacts
         uses: actions/download-artifact@v2
         with:
           path: artifacts
@@ -83,7 +83,7 @@ jobs:
       checks: write
       pull-requests: write
     steps:
-      - name: Download Unit Test Result Artifacts
+      - name: Download Unit Result Artifacts
         uses: actions/download-artifact@v2
         with:
           path: artifacts
