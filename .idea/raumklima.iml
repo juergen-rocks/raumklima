@@ -8,4 +8,7 @@
     <orderEntry type="jdk" jdkName="Poetry (raumklima)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PyBDDFrameworkConfig">
+    <option name="preferedFrameworkName" value="behave" />
+  </component>
 </module>

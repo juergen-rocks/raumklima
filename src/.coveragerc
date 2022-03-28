@@ -2,6 +2,9 @@
 omit =
     test/*
     */venv/*
+    */.venv/*
     */pyvenv/*
     */JetBrains/*
     */virtualenv/*
+
+relative_files = true

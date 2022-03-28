@@ -7,8 +7,8 @@ on:
 
 jobs:
 
-  unit-test:
-    name: Unit Testing with Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }}
+  test:
+    name: Unit Testing and Functional Testing with Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -34,7 +34,7 @@ jobs:
       run: (cd src && poetry install)
     - name: Poetry Python Version Output
       run: (cd src && poetry run python --version)
-    - name: PyTest
+    - name: PyTest (Unit Tests)
       run: (cd src && poetry run pytest)
     - name: Upload Unit Test Results
       if: always()
@@ -42,36 +42,13 @@ jobs:
       with:
         name: Unit Test Results (Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }})
         path: 'src/test-reports/raumklima.xml'
-
-  functional-test:
-    name: Functional Testing with Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [ '3.8', '3.9', '3.10' ]
-        os: [ 'ubuntu-latest', 'ubuntu-20.04', 'ubuntu-18.04', 'windows-latest', 'macos-latest' ]
-        architecture: [ 'x64' ]
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+    - name: Upload Unit Test Coverage data
+      uses: actions/upload-artifact@v2
       with:
-        fetch-depth: 1
-    - name: Python Installation
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-        architecture: ${{ matrix.architecture }}
-    - name: Update pip/wheel/setuptools
-      run: python -m pip install -U pip wheel setuptools
-    - name: Poetry Installation
-      run: python -m pip install poetry
-    - name: poetry install
-      run: (cd src && poetry install)
-    - name: Poetry Python Version Output
-      run: (cd src && poetry run python --version)
-    - name: Behave
-      run: (cd src && poetry run behave --summary --junit --junit-directory=test-reports/bdd/)
+        name: Unit Test Coverage (Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }})
+        path: 'src/.coverage'
+    - name: Behave (Functional Tests
+      run: (cd src && poetry run behave --summary --junit --junit-directory=test-reports/bdd/ --tags @manual)
     - name: Upload Functional Test Results
       if: always()
       uses: actions/upload-artifact@v2
@@ -81,13 +58,12 @@ jobs:
 
   publish-test-results:
     name: "Publish Test Results"
-    needs: [ unit-test, functional-test ]
+    needs: [ test ]
     runs-on: ubuntu-latest
     if: always()
     permissions:
       checks: write
       pull-requests: write
-
     steps:
       - name: Download Unit Test Result Artifacts
         uses: actions/download-artifact@v2
@@ -97,3 +73,35 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         with:
           files: "artifacts/**/*.xml"
+
+  publish-coverage:
+    name: "Publish Coverage"
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    if: always()
+    permissions:
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Download Unit Test Result Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+      - name: Publish Coverage Comment
+        id: coverage_comment
+        uses: ewjoachim/python-coverage-comment-action@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_COVERAGE_FILES: true
+          MINIMUM_GREEN: 99
+          MINIMUM_YELLOW: 95
+      - name: Store Pull Request comment to be posted
+        uses: actions/upload-artifact@v2
+        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
+        with:
+          name: python-coverage-comment-action
+          path: python-coverage-comment-action.txt

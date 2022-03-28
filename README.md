@@ -1,4 +1,7 @@
-[![.github/workflows/ci.yml](https://github.com/juergen-rocks/raumklima/actions/workflows/ci.yml/badge.svg)](https://github.com/juergen-rocks/raumklima/actions/workflows/ci.yml)
+| Branch  | Build-/CI-Status                                                                                                                                                                                 |
+|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| main    | [![.github/workflows/ci.yml](https://github.com/juergen-rocks/raumklima/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/juergen-rocks/raumklima/actions/workflows/ci.yml)    |
+| develop | [![.github/workflows/ci.yml](https://github.com/juergen-rocks/raumklima/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/juergen-rocks/raumklima/actions/workflows/ci.yml) |
 
 # ELV Raumklimastation RS 500 bzw. dnt RoomLogg Pro unter Linux auslesen
 
@@ -124,12 +127,12 @@ Die Implementierung ist jetzt trivial, sie erfolgt in __Python 3.5__. Es gibt di
 
 Diese Module werden nun implementiert:
 
-| Modul       | Verwendung                                                                                                                                                     |
-|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| rs500reader | Liest die aktuellen Messwerte für Temperatur und Luftfeuchte aus.                                                                                              |
-| rs5002redis | Holt alle Messwerte periodisch und schreibt sie in eine Redis-Instanz. Gut als Cache und als Abfragehilfe für WebIF und Icinga-Abfrageskript (`check_rs500`).  |
-| check_rs500 | Icinga-Command, welches aus der Redis-Instanz sich die Messwerte wiederholt und entsprechend auswertet.                                                        |
-| rs5002mqtt | Holt alle Messwerte periodisch und schickt diese an einen MQTT Broker um von dort weiter zu verarbeitet werden.  |
+| Modul       | Verwendung                                                                                                                                                    |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| rs500reader | Liest die aktuellen Messwerte für Temperatur und Luftfeuchte aus.                                                                                             |
+| rs5002redis | Holt alle Messwerte periodisch und schreibt sie in eine Redis-Instanz. Gut als Cache und als Abfragehilfe für WebIF und Icinga-Abfrageskript (`check_rs500`). |
+| check_rs500 | Icinga-Command, welches aus der Redis-Instanz sich die Messwerte wiederholt und entsprechend auswertet.                                                       |
+| rs5002mqtt  | Holt alle Messwerte periodisch und schickt diese an einen MQTT Broker um von dort weiter zu verarbeitet werden.                                               |
 
 ## Was funktioniert?
 
@@ -196,12 +199,30 @@ In der Datei `check_rs500.ini` konfiguriere ich den Zugang zur Redis-Instanz auf
 
 Im Wiki liegen Konfig-Beispiele für Icinga2.
 
-![Beispielhafte Icinga-Service-Ansocht](./doc/img/icinga-service-overview.png "Beispielhafte Icinga-Service-Ansicht")
+![Beispielhafte Icinga-Service-Ansicht](./doc/img/icinga-service-overview.png "Beispielhafte Icinga-Service-Ansicht")
 
 Das wars.
 
 # Tests durchführen
 
+## Unit Tests
+
 Die Tests befinden sich in `src/test`. Für die Durchführung der Tests sind zusätzliche Abhängigkeiten erforderlich. Sie stehen zur Verfügung, wenn einfach `poetry install` im Ordner `src` ausgeführt wurde. 
 
 Die Ausführung erfolgt im Ordner `src` mit dem Befehl `poetry run pytest`.
+
+## Functional Tests
+
+Die Functional Tests befinden sich unter `src/features` und werden im Order `src` so ausgeführt:
+
+```bash
+poetry run behave --summary --no-capture
+```
+
+Dort sind auch manuelle Testschritte enthalten (daher das `--no-capture`). Im CI-Lauf werden diese Test nicht durchgeführt, da sie eine angeschlossene Raumklimastation benötigen.
+
+# Pull Requests
+
+Pull Requests sind sehr willkommen. Wenn es möglich ist, bitte die Pull Requests gegen den `develop`-Branch richten.
+
+Mehr dazu in der [CONTRIBUTING.md](./CONTRIBUTING.md)
