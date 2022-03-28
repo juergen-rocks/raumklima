@@ -48,7 +48,7 @@ jobs:
         name: Unit Test Coverage (Python ${{ matrix.python-version }} ${{ matrix.architecture }} on ${{ matrix.os }})
         path: 'src/.coverage'
     - name: Behave (Functional Tests
-      run: (cd src && poetry run behave --summary --junit --junit-directory=test-reports/bdd/ --tags @manual)
+      run: (cd src && poetry run behave --summary --junit --junit-directory=test-reports/bdd/ --tags ~@manual)
     - name: Upload Functional Test Results
       if: always()
       uses: actions/upload-artifact@v2
