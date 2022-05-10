@@ -286,7 +286,7 @@ testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtuale
 
 [[package]]
 name = "redis"
-version = "4.2.2"
+version = "4.3.1"
 description = "Python client for Redis database and key-value store"
 category = "main"
 optional = true
@@ -350,7 +350,7 @@ rs500reader = ["hidapi"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "59a90006edd93f77ad2c054ab905a607f97d88c5ea742935f3aba7814b0ca50a"
+content-hash = "24bc13947388d21f60938d8503b770f08c6befe6a4368d2120c9370e0f87e72a"
 
 [metadata.files]
 async-timeout = [
@@ -539,8 +539,8 @@ pytest-cov = [
     {file = "pytest_cov-3.0.0-py3-none-any.whl", hash = "sha256:578d5d15ac4a25e5f961c938b85a05b09fdaae9deef3bb6de9a6e766622ca7a6"},
 ]
 redis = [
-    {file = "redis-4.2.2-py3-none-any.whl", hash = "sha256:4e95f4ec5f49e636efcf20061a5a9110c20852f607cfca6865c07aaa8a739ee2"},
-    {file = "redis-4.2.2.tar.gz", hash = "sha256:0107dc8e98a4f1d1d4aa00100e044287f77121a1e6d2085545c4b7fa94a7a27f"},
+    {file = "redis-4.3.1-py3-none-any.whl", hash = "sha256:84316970995a7adb907a56754d2b92d88fc2d252963dc5ac34c88f0f1a22c25d"},
+    {file = "redis-4.3.1.tar.gz", hash = "sha256:94b617b4cd296e94991146f66fc5559756fbefe9493604f0312e4d3298ac63e9"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
