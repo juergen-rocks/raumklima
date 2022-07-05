@@ -1,4 +1,8 @@
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=juergen-rocks/raumklima)](https://dependabot.com)
+# Großes Refactoring im Gange!
+
+**Bitte beachten:** Aktuell wird an einem großen grundsätzlichen Refactoring gearbeitet. Die Arbeiten finden im Branch `develop` statt. Bitte diesen Branch auch für Pull Requests nutzen.
+
+*****
 
 | Branch  | Build Status                                                                                                                                 |
 |---------|----------------------------------------------------------------------------------------------------------------------------------------------|
