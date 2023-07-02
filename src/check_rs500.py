@@ -9,6 +9,7 @@ from redis import StrictRedis, RedisError
 
 from rs500common.configuration import ConfigProvider, discover_config_file_by_name
 
+
 EXIT_CODE_OK = 0
 EXIT_CODE_WARN = 1
 EXIT_CODE_CRIT = 2
@@ -62,12 +63,11 @@ def handle_request(args: argparse.Namespace):
     prefix = conf.get(section="redis", option="prefix", fallback="")
     try:
         redis = StrictRedis(host=host, port=port, db=db, password=password, socket_timeout=socket_timeout)
-        raw_value_temp = redis.get("{0}c{1}_temp".format(prefix, args.channel))
-        raw_value_humi = redis.get("{0}c{1}_humi".format(prefix, args.channel))
+        raw_value_temp = await redis.get("{0}c{1}_temp".format(prefix, args.channel))
+        raw_value_humi = await redis.get("{0}c{1}_humi".format(prefix, args.channel))
         if raw_value_temp is None and raw_value_humi is None:
             print("{}: Unknown Channel [{}]".format(EXIT_WORD_CRIT, args.channel))
             exit(2)
-            return
         temp = "unknown"
         humi = "unknown"
         if raw_value_temp is not None:
@@ -91,7 +91,6 @@ def handle_request(args: argparse.Namespace):
                 )
             )
             exit(EXIT_CODE_CRIT)
-            return
         if (
             any(
                 [
@@ -109,10 +108,8 @@ def handle_request(args: argparse.Namespace):
                 )
             )
             exit(EXIT_CODE_CRIT)
-            return
         exit_code = check(args, temp, humi)
         exit(exit_code)
-        return
     except RedisError:
         print("{}: Redis error".format(EXIT_WORD_UNKNOWN))
         exit(EXIT_CODE_UNKNOWN)

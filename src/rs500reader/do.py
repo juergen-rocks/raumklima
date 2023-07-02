@@ -1,4 +1,4 @@
-from typing import Sequence, Optional
+from typing import Sequence, Optional, Dict
 
 
 class TempHum(object):
@@ -29,7 +29,16 @@ class TempHum(object):
 
 class Response(object):
     def __init__(self):
-        self.__data = {1: None, 2: None, 3: None, 4: None, 5: None, 6: None, 7: None, 8: None}
+        self.__data: Dict[int, Optional[TempHum]] = {
+            1: None,
+            2: None,
+            3: None,
+            4: None,
+            5: None,
+            6: None,
+            7: None,
+            8: None,
+        }
 
     def get_channel_data(self, channel: int) -> Optional[TempHum]:
         return self.__data[channel]

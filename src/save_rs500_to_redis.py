@@ -3,28 +3,13 @@
 """
 Collect Data and save to Redis DB
 """
-
-from os.path import dirname
-
-from rs5002redis.saver import save_data_to_redis
-from rs500common.configuration import discover_config_file_by_name
-from rs500reader.reader import Rs500Reader
-
-
-def fetch_and_save():
-    """
-    Get data and save
-    """
-    reader = Rs500Reader()
-    data = reader.get_data()
-    if data is not None:
-        to_save = {}
-        for channel, values in data.all.items():
-            if values is not None:
-                to_save["c{}_temp".format(channel)] = values.temperature
-                to_save["c{}_humi".format(channel)] = values.humidity
-        save_data_to_redis(to_save, discover_config_file_by_name("rs5002backend.ini", dirname(__file__)))
+import warnings
+from save_rs500_to_backend import fetch_and_save
 
 
 if __name__ == "__main__":
+    warnings.warn(
+        "'save_rs500_to_redis.py' will be removed soon. Use 'save_rs500_to_backend.py' instead.",
+        DeprecationWarning,
+    )
     fetch_and_save()
