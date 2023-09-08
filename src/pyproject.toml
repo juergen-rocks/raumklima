@@ -31,7 +31,7 @@ redis = {version = "^4.6.0", optional = true}
 paho-mqtt = {version = "^1.6.1", optional= true}
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.2"
+pytest = "^7.4.2"
 pytest-cov = "^4.1.0"
 pytest-black = "^0.3.12"
 behave = "^1.2.6"
